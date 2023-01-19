@@ -3,8 +3,8 @@ const authController = require('../controllers/authController');
 const validateRegister = require('../middlewares/validateRegister');
 
 // auth routes
-auth_routes.post('/register', validateRegister, authController.register)
-auth_routes.post('/login', authController.login)
+auth_routes.post('/auth/register', validateRegister, authController.register)
+auth_routes.post('/auth/login', authController.login)
 
 
 module.exports = auth_routes;
