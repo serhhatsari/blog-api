@@ -1,0 +1,22 @@
+{
+  "name": "blog-app",
+  "version": "1.0.0",
+  "description": "Blog App made with Express.js",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://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@github.com/serhhatsari/blog-app.git"
+  },
+  "author": "Serhat SARI",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/serhhatsari/blog-app/issues"
+  },
+  "homepage": "https://github.com/serhhatsari/blog-app#readme",
+  "dependencies": {
+    "express": "^4.18.2"
+  }
+}
