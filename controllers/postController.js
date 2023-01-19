@@ -3,12 +3,6 @@ const post_service = require("../service/postService");
 
 function getPosts(req, res) {
 
-    if (!req.body.user_id) {
-        return res.status(400).send({
-            message: "User id is required",
-        });
-    }
-
     post_service.getAllPosts(req, res)
         .then((posts) => {
             return res.send(posts);
@@ -24,11 +18,6 @@ function getPosts(req, res) {
 
 function createPost(req, res) {
 
-    if (!req.body.title || !req.body.content || !req.body.user_id) {
-        return res.status(400).send({
-            message: "Content can not be empty!",
-        });
-    }
     const post = post_model
         .create({
             title: req.body.title,
@@ -48,11 +37,7 @@ function createPost(req, res) {
 }
 
 function getPost(req, res) {
-    if (!req.params.id) {
-        return res.status(400).send({
-            message: "Post id is required",
-        });
-    }
+
     post_model
         .findOne({
             where: {
@@ -77,12 +62,6 @@ function getPost(req, res) {
 }
 
 function updatePost(req, res) {
-
-    if (!req.body.title || !req.body.content || !req.body.user_id) {
-        return res.status(400).send({
-            message: "Content can not be empty!",
-        });
-    }
 
     post_model
         .update(
@@ -117,12 +96,6 @@ function updatePost(req, res) {
 }
 
 function deletePost(req, res) {
-
-    if (!req.params.id) {
-        return res.status(400).send({
-            message: "Post id is required"
-        });
-    }
 
     post_model
         .destroy({

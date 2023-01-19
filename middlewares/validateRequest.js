@@ -1,15 +1,52 @@
-function validateRequest(req, res) {
-    if (!req.headers.authorization) {
-        return res.status(401).send("Unauthorized");
+function getPosts(req, res, next) {
+    if (!req.body.user_id) {
+        return res.status(400).send({
+            message: "User id is required",
+        });
     }
-    let token = req.headers.authorization.split(" ")[1];
-    jwt.verify(token, ACCESS_TOKEN_SECRET, (err, decoded) => {
-        if (err) {
-            return res.status(401).send("Unauthorized: Invalid token");
-        }
-    });
+    next();
+}
+
+function createPost(req, res, next) {
+    if (!req.body.title || !req.body.content || !req.body.user_id) {
+        return res.status(400).send({
+            message: "Content can not be empty!",
+        });
+    }
+    next();
+}
+
+function getPost(req, res, next) {
+    if (!req.params.id) {
+        return res.status(400).send({
+            message: "Post id is required",
+        });
+    }
+    next();
+}
+
+function updatePost(req, res, next) {
+    if (!req.body.title || !req.body.content || !req.body.user_id) {
+        return res.status(400).send({
+            message: "Content can not be empty!",
+        });
+    }
+    next();
+}
+
+function deletePost(req, res, next) {
+    if (!req.params.id) {
+        return res.status(400).send({
+            message: "Post id is required",
+        });
+    }
+    next();
 }
 
 module.exports = {
-    validateRequest,
+    getPosts,
+    createPost,
+    getPost,
+    updatePost,
+    deletePost,
 };
