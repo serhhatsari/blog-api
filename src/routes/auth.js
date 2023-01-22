@@ -1,10 +1,10 @@
 const auth_routes = require('express').Router();
 const authController = require('../controllers/authController');
-const validateRegister = require('../middlewares/validateRegister');
+const validateRequest = require('../middlewares/validateRequest');
 
 // auth routes
-auth_routes.post('/auth/register', validateRegister, authController.register)
-auth_routes.post('/auth/login', authController.login)
+auth_routes.post('/auth/register', validateRequest.validateRegister, authController.register)
+auth_routes.post('/auth/login', validateRequest.validateLogin, authController.login)
 
 
 module.exports = auth_routes;

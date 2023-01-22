@@ -1,3 +1,21 @@
+function validateRegister(req, res, next) {
+    const { name, surname, mail, password } = req.body;
+    if (!name || !surname || !mail || !password) {
+        return res.status(400).json({ message: 'Name, Surname, Mail, and Password are required.' });
+    }
+    next();
+};
+
+function validateLogin(req, res, next) {
+    if (!req.body.mail || !req.body.password) {
+        return res.status(400).send({
+            message: "Mail and Password are required.",
+        });
+    }
+    next();
+}
+
+
 function getPosts(req, res, next) {
     if (!req.body.user_id) {
         return res.status(400).send({
@@ -49,4 +67,6 @@ module.exports = {
     getPost,
     updatePost,
     deletePost,
+    validateRegister,
+    validateLogin
 };
