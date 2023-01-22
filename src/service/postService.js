@@ -1,8 +1,8 @@
-const post_model = require("../models/post");
+const postModel = require("../models/post");
 
 function getAllPosts(req, res) {
 
-    post_model
+    postModel
         .findAll({
             where: {
                 user_id: req.body.user_id,
@@ -21,7 +21,7 @@ function getAllPosts(req, res) {
 
 function getPost(req, res) {
 
-    post_model
+    postModel
         .findOne({
             where: {
                 post_id: req.params.id,
@@ -44,7 +44,7 @@ function getPost(req, res) {
 }
 
 function createPost(req, res) {
-    const post = post_model
+    const post = postModel
         .create({
             title: req.body.title,
             content: req.body.content,
@@ -62,7 +62,7 @@ function createPost(req, res) {
 }
 
 function updatePost(req, res) {
-    post_model
+    postModel
         .update(
             {
                 title: req.body.title,
@@ -95,7 +95,7 @@ function updatePost(req, res) {
 }
 
 function deletePost(req, res) {
-    post_model
+    postModel
         .destroy({
             where: {
                 post_id: req.params.id

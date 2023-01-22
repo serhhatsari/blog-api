@@ -61,6 +61,44 @@ function deletePost(req, res, next) {
     next();
 }
 
+
+function createComment(req, res, next) {
+    if (!req.body.content || !req.body.user_id || !req.body.post_id) {
+        return res.status(400).send({
+            message: "Content can not be empty!",
+        });
+    }
+    next();
+}
+
+function getComment(req, res, next) {
+    if (!req.params.id) {
+        return res.status(400).send({
+            message: "Comment id is required",
+        });
+    }
+    next();
+}
+
+function updateComment(req, res, next) {
+    if (!req.body.content || !req.body.user_id || !req.body.post_id || !req.params.id) {
+
+        return res.status(400).send({
+            message: "Content can not be empty!",
+        });
+    }
+    next();
+}
+
+function deleteComment(req, res, next) {
+    if (!req.params.id) {
+        return res.status(400).send({
+            message: "Comment id is required",
+        });
+    }
+    next();
+}
+
 module.exports = {
     getPosts,
     createPost,
@@ -68,5 +106,10 @@ module.exports = {
     updatePost,
     deletePost,
     validateRegister,
-    validateLogin
+    validateLogin,
+    createComment,
+    getComment,
+    updateComment,
+    deleteComment,
+
 };

@@ -1,4 +1,4 @@
-const person_model = require("../models/person");
+const personModel = require("../models/person");
 
 function register(req, res) {
     const person = buildPerson(req);
@@ -20,7 +20,7 @@ function register(req, res) {
 }
 
 function buildPerson(req) {
-    const person = person_model.build({
+    const person = personModel.build({
         person_name: req.body.name,
         person_surname: req.body.surname,
         person_mail: req.body.mail,
@@ -40,7 +40,7 @@ function hashPassword(password) {
 
 
 function login(req, res) {
-    person_model.findOne({
+    personModel.findOne({
         where: {
             person_mail: req.body.mail,
         },
