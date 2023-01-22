@@ -1,5 +1,7 @@
 const commentModel = require('../models/commentModel');
 
+// TODO: Check constraint fails
+
 function getComments(req, res) {
     commentModel.findAll(
         {
