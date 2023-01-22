@@ -2,7 +2,7 @@ const express = require('express');
 const routes = require('./routes/index');
 const bodyParser = require('body-parser');
 const path = require('path');
-const app = express();
+const app = require('./swagger');
 
 // support parsing of application/json type post data
 app.use(bodyParser.json({ limit: '5mb' }));
