@@ -1,4 +1,4 @@
-const { Sequelize } = require("sequelize");
+const { DataTypes } = require("sequelize");
 const sequelize = require("../config/database");
 
 const Person = sequelize.define(
@@ -6,12 +6,12 @@ const Person = sequelize.define(
 
     {
         person_id: {
-            type: Sequelize.INTEGER,
+            type: DataTypes.INTEGER,
             primaryKey: true,
             autoIncrement: true,
         },
         person_name: {
-            type: Sequelize.STRING,
+            type: DataTypes.STRING,
             allowNull: false,
             validate: {
                 notNull: {
@@ -20,7 +20,7 @@ const Person = sequelize.define(
             },
         },
         person_surname: {
-            type: Sequelize.STRING,
+            type: DataTypes.STRING,
             allowNull: false,
             validate: {
                 notNull: {
@@ -29,7 +29,7 @@ const Person = sequelize.define(
             },
         },
         person_mail: {
-            type: Sequelize.STRING,
+            type: DataTypes.STRING,
             allowNull: false,
             validate: {
                 notNull: {
@@ -53,7 +53,7 @@ const Person = sequelize.define(
             },
         },
         person_password: {
-            type: Sequelize.STRING,
+            type: DataTypes.STRING,
             allowNull: false,
             validate: {
                 notNull: {

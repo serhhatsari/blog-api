@@ -1,6 +1,6 @@
 const comment_routes = require('express').Router();
 
-// auth routes
+// comment routes
 comment_routes.get('/comments', commentController.getComments)
 comment_routes.post('/comments', commentController.createComment)
 comment_routes.get('/comments/:id', commentController.getComment)
