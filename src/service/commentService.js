@@ -1,6 +1,6 @@
 const commentModel = require('../models/commentModel');
 
-function getComments() {
+function getComments(req, res) {
     commentModel.findAll(
         {
             where: {
@@ -19,7 +19,7 @@ function getComments() {
 
 }
 
-function createComment() {
+function createComment(req, res) {
     commentModel.create(
         {
             content: req.body.content,
@@ -38,7 +38,7 @@ function createComment() {
     );
 }
 
-function getComment() {
+function getComment(req, res) {
     commentModel.findOne(
         {
             where: {
@@ -60,7 +60,7 @@ function getComment() {
     });
 }
 
-function updateComment() {
+function updateComment(req, res) {
     commentModel.update(
         {
             content: req.body.content,
@@ -87,7 +87,7 @@ function updateComment() {
     });
 }
 
-function deleteComment() {
+function deleteComment(req, res) {
     commentModel.destroy(
         {
             where: {

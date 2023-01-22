@@ -15,10 +15,18 @@ const validateRequest = require('../middlewares/validateRequest');
  *           schema:
  *             type: object
  *             properties:
+ *               name:
+ *                type: string
+ *                example: Serhat
+ *               surname:
+ *                type: string
+ *                example: SARI
  *               mail:
  *                 type: string
+ *                 example: serhat@gmail.com
  *               password:
  *                 type: string
+ *                 example: serhat123
  *     responses:
  *       201:
  *         description: User created successfully
@@ -42,8 +50,10 @@ auth_routes.post('/auth/register', validateRequest.validateRegister, authControl
  *             properties:
  *               mail:
  *                 type: string
+ *                 example: serhat@gmail.com
  *               password:
  *                 type: string
+ *                 example: serhat123
  *     responses:
  *       200:
  *         description: Login successful

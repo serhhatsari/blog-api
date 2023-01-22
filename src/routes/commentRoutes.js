@@ -36,9 +36,11 @@ comment_routes.get('/comments', validateRequest.getComments, commentController.g
  *           schema:
  *             type: object
  *             properties:
- *               postId:
+ *               post_id:
  *                 type: integer
- *               body:
+ *               user_id:
+ *                 type: integer
+ *               content:
  *                 type: string
  *     responses:
  *       201:
