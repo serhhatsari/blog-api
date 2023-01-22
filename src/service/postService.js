@@ -33,7 +33,7 @@ function getPost(req, res) {
                     message: "Post not found with id " + req.params.id,
                 });
             }
-            return res.send(post);
+            return res.status(200).send(post);
         })
         .catch((err) => {
             return res.status(500).send({

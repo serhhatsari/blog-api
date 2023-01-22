@@ -10,8 +10,9 @@ function verifyToken(req, res, next) {
         if (err) {
             return res.status(401).send("Unauthorized: Invalid token");
         }
+        next();
     });
-    next();
+
 }
 
 module.exports = {
