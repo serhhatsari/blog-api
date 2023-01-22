@@ -62,6 +62,14 @@ function deletePost(req, res, next) {
 }
 
 
+function getComments(req, res) {
+    if (!req.body.user_id) {
+        return res.status(400).send({
+            message: "User id is required",
+        });
+    }
+}
+
 function createComment(req, res, next) {
     if (!req.body.content || !req.body.user_id || !req.body.post_id) {
         return res.status(400).send({
@@ -70,6 +78,7 @@ function createComment(req, res, next) {
     }
     next();
 }
+
 
 function getComment(req, res, next) {
     if (!req.params.id) {
@@ -109,6 +118,7 @@ module.exports = {
     validateLogin,
     createComment,
     getComment,
+    getComments,
     updateComment,
     deleteComment,
 
