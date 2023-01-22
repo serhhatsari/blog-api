@@ -1,4 +1,4 @@
-const commentModel = require('../models/comment');
+const commentModel = require('../models/commentModel');
 
 function getComments() {
     commentModel.findAll(

@@ -1,5 +1,6 @@
 const comment_routes = require('express').Router();
-const validateRequest = require('../middleware/validateRequest');
+const validateRequest = require('../middlewares/validateRequest');
+const commentController = require('../controllers/commentController');
 
 // comment routes
 comment_routes.get('/comments', validateRequest.getComments, commentController.getComments)

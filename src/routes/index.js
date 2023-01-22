@@ -1,7 +1,7 @@
 const routes = require('express').Router();
-const auth = require('./auth');
-const post = require('./post');
-const comment = require('./comment');
+const auth = require('./authRoutes');
+const post = require('./postRoutes');
+const comment = require('./commentRoutes');
 const { verifyToken } = require('../middlewares/verifyToken');
 
 routes.use('/', auth);

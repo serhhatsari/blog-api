@@ -1,4 +1,4 @@
-const personModel = require("../models/person");
+const personModel = require("../models/personModel");
 
 function register(req, res) {
     const person = buildPerson(req);

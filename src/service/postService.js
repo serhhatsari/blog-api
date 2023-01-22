@@ -1,4 +1,4 @@
-const postModel = require("../models/post");
+const postModel = require("../models/postModel");
 
 function getAllPosts(req, res) {
 
