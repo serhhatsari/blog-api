@@ -6,6 +6,23 @@ const app = express();
 
 const options = {
     swaggerDefinition: {
+        components: {
+            securitySchemes: {
+                bearerAuth: {
+                    type: 'http',
+                    in: 'header',
+                    name: 'Authorization',
+                    description: 'Bearer token to access these api endpoints',
+                    scheme: 'bearer',
+                    bearerFormat: 'JWT',
+                },
+            },
+        },
+        security: [
+            {
+                bearerAuth: [],
+            },
+        ],
         openapi: '3.0.0',
         info: {
             title: 'Blog API',

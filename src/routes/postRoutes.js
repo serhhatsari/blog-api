@@ -8,8 +8,15 @@ const validateRequest = require('../middlewares/validateRequest');
  * /posts:
  *   get:
  *     summary: Retrieve all posts
- *     security:
- *       - bearerAuth: []
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               user_id:
+ *                 type: integer
  *     responses:
  *       200:
  *         description: An array of posts
