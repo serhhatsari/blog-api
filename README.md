@@ -12,6 +12,12 @@ You can delete the containers using the following command:
 docker compose down  
 ```
 
+#### Swagger Page   
+Any endpoint that is exposed by the server can be accessible at the /doc endpoint.  
+```  
+eg: localhost:3000/api/doc
+```  
+
 ## Local Development
 ### Database   
 First, you need to create MySQL container using the following command:  
