@@ -1,6 +1,7 @@
 const { Sequelize } = require('sequelize');
 const config = require('../config');
 
+// Connect to database
 const sequelize = new Sequelize(
     config.DB_NAME,
     config.DB_USER,
@@ -12,14 +13,14 @@ const sequelize = new Sequelize(
     }
 );
 
-// Sync database
-/*
-async function syncDatabase() {
-    await sequelize.sync({ force: true });
-}
-syncDatabase();
 
-*/
+if (process.env.NODE_ENV === "development") {
+    async function syncDatabase() {
+        await sequelize.sync({ force: true });
+    }
+    console.log("Syncing database...");
+    syncDatabase();
+}
 
 
 module.exports = sequelize;

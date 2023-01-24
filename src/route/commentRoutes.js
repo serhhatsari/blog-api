@@ -38,8 +38,6 @@ comment_routes.get('/comments', commentController.getComments)
  *             properties:
  *               post_id:
  *                 type: integer
- *               user_id:
- *                 type: integer
  *               content:
  *                 type: string
  *     responses:
