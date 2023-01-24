@@ -52,7 +52,7 @@ const getUserById = async (req, res) => {
     }).then((user) => {
         if (!user) {
             return res.status(404).send({
-                message: "Post not found with id " + req.params.id,
+                message: "User not found with id " + req.params.id,
             });
         }
         return res.status(200).send({
@@ -148,13 +148,13 @@ const getUserComments = async (req, res) => {
     }).then((data) => {
         if (!data) {
             return res.status(404).send({
-                message: "Post not found with id " + req.params.id,
+                message: "Comment not found with id " + req.params.id,
             })
         }
         return res.status(200).send({ data });
     }).catch((err) => {
         return res.status(500).send({
-            message: err.message || "Some error occurred while retrieving posts."
+            message: err.message || "Some error occurred while retrieving Comments."
         })
     });
 }
@@ -173,18 +173,18 @@ const updateUser = async (req, res) => {
     ).then((person) => {
         if (!person) {
             return res.status(404).send({
-                message: "Post not found with id " + req.params.id,
+                message: "User not found with id " + req.params.id,
             });
         }
         return res.status(200).send({
-            message: "Post was updated successfully.",
+            message: "User was updated successfully.",
         }
         );
     })
         .catch((err) => {
             return res.status(500).send({
                 message:
-                    err.message || "Some error occurred while retrieving posts.",
+                    err.message || "Some error occurred while retrieving users.",
             });
         });
 }
@@ -198,7 +198,7 @@ const deleteUser = async (req, res) => {
     }).then((person) => {
         if (!person) {
             return res.status(404).send({
-                message: "Post not found with id " + req.params.id,
+                message: "User not found with id " + req.params.id,
             });
         }
         return res.status(200).send({
