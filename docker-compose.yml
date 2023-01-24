@@ -1,19 +1,25 @@
-version: "3.7"
+version: "3.9"
 services:
   backend:
     build: .
     depends_on:
-      - db
+      db:
+        condition: service_healthy
     ports:
       - "3000:3000"
     environment:
       NODE_ENV: development
-      DB_HOST: mysql
+      DB_HOST: mysql-db
 
   db:
     image: mysql:5.7
-    container_name: mysql
+    container_name: mysql-db
     restart: always
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 10s
+      timeout: 10s
+      retries: 3
     environment:
       MYSQL_ROOT_PASSWORD: root
       MYSQL_DATABASE: here
