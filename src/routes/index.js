@@ -1,11 +1,13 @@
 const routes = require('express').Router();
-const auth = require('./authRoutes');
-const post = require('./postRoutes');
-const comment = require('./commentRoutes');
+const authRoutes = require('./authRoutes');
+const postRoutes = require('./postRoutes');
+const commentRoutes = require('./commentRoutes');
+const userRoutes = require('./userRoutes');
 const { verifyToken } = require('../middlewares/verifyToken');
 
-routes.use('/', auth);
-routes.use('/', verifyToken, post);
-routes.use('/', verifyToken, comment)
+routes.use('/', authRoutes);
+routes.use('/', verifyToken, postRoutes);
+routes.use('/', verifyToken, commentRoutes);
+routes.use('/', verifyToken, userRoutes);
 
 module.exports = routes;
