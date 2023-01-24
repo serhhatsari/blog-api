@@ -12,5 +12,12 @@ const sequelize = new Sequelize(
     }
 );
 
+// Sync database
+/*
+async function syncDatabase() {
+    await sequelize.sync({ force: true });
+syncDatabase();
+*/
+
 
 module.exports = sequelize;

@@ -25,12 +25,26 @@ const getUserComments = async (req, res) => {
     res.json(comments);
 }
 
+const updateUser = async (req, res) => {
+    const user = await userService.updateUser(req.params.id, req.body);
+    res.json(user);
+}
+
+const deleteUser = async (req, res) => {
+    const user = await userService.deleteUser(req.params.id);
+    res.json(user);
+}
+
+
 module.exports = {
     getAllUsers,
     getUserById,
     getMe,
     getUserPosts,
-    getUserComments
+    getUserComments,
+    updateUser,
+    deleteUser,
+
 }
 
 
