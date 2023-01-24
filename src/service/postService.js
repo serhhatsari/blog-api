@@ -16,6 +16,16 @@ function getAllPosts(req, res) {
                         model: personModel,
                         attributes: ["person_id", "person_name", "person_surname"],
                     },
+                    {
+                        model: commentModel,
+                        attributes: ["content"],
+                        include: [
+                            {
+                                model: personModel,
+                                attributes: ["person_id", "person_name", "person_surname"],
+                            },
+                        ],
+                    },
                 ],
             }
         ).then((posts) => {

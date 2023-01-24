@@ -13,7 +13,6 @@ const DB_NAME = process.env.DB_NAME;
 const ACCESS_TOKEN_SECRET = process.env.ACCESS_TOKEN_SECRET;
 const REFRESH_TOKEN_SECRET = process.env.REFRESH_TOKEN_SECRET;
 
-
 module.exports = {
     DB_HOST,
     DB_PORT,

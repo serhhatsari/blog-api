@@ -12,15 +12,11 @@ function register(req, res) {
         .then((person) => {
             console.log(person);
             return res.status(200).send({
-                status: "success",
-                message: "Person created",
-                data: {
-                    name: req.body.name,
-                    surname: req.body.surname,
-                    mail: req.body.mail,
-                    accessToken: generateTokens(person.person_id).accessToken,
-                    refreshToken: generateTokens(person.person_id).refreshToken,
-                }
+                name: req.body.name,
+                surname: req.body.surname,
+                mail: req.body.mail,
+                accessToken: generateTokens(person.person_id).accessToken,
+                refreshToken: generateTokens(person.person_id).refreshToken,
             });
         })
         .catch((err) => {
@@ -49,15 +45,11 @@ function login(req, res) {
             const tokens = generateTokens(person.person_id);
 
             return res.status(200).send({
-                status: "success",
-                message: "Person logged in",
-                data: {
-                    accessToken: tokens.accessToken,
-                    refreshToken: tokens.refreshToken,
-                    name: person.person_name,
-                    surname: person.person_surname,
-                    mail: person.person_mail,
-                },
+                accessToken: tokens.accessToken,
+                refreshToken: tokens.refreshToken,
+                name: person.person_name,
+                surname: person.person_surname,
+                mail: person.person_mail,
             });
         })
         .catch((err) => {
@@ -67,8 +59,6 @@ function login(req, res) {
             });
         });
 }
-
-
 
 module.exports = {
     register,
