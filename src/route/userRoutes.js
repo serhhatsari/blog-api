@@ -1,6 +1,6 @@
 const userRoutes = require('express').Router();
-const userController = require('../controllers/userController');
-const { register } = require('../controllers/authController');
+const userController = require('../controller/userController');
+const { register } = require('../controller/authController');
 
 userRoutes.post('/users', register);
 userRoutes.get('/users', userController.getAllUsers());

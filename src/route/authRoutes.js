@@ -1,6 +1,6 @@
 const auth_routes = require('express').Router();
-const authController = require('../controllers/authController');
-const validateRequest = require('../middlewares/validateRequest');
+const authController = require('../controller/authController');
+const validateRequest = require('../middleware/validateRequest');
 
 /**
  * @swagger

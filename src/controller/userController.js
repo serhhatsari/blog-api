@@ -13,19 +13,19 @@ const getMe = async (req, res) => {
 }
 
 const getUserPosts = async (req, res) => {
-    userService.getUserPosts(req.params.id);
+    userService.getUserPosts(req, res);
 }
 
 const getUserComments = async (req, res) => {
-    userService.getUserComments(req.params.id);
+    userService.getUserComments(req, res);
 }
 
 const updateUser = async (req, res) => {
-    userService.updateUser(req.params.id, req.body);
+    userService.updateUser(req, res);
 }
 
 const deleteUser = async (req, res) => {
-    userService.deleteUser(req.params.id);
+    userService.deleteUser(req, res);
 }
 
 
