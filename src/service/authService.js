@@ -37,8 +37,6 @@ function hashPassword(password) {
     return hash;
 }
 
-
-
 function login(req, res) {
     personModel.findOne({
         where: {
@@ -81,7 +79,6 @@ function checkPassword(pass, person_pass) {
     }
 
 }
-
 
 function generateTokens(person_id) {
     const jwt = require('jsonwebtoken');
