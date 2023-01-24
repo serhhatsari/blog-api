@@ -8,15 +8,6 @@ const commentController = require('../controller/commentController');
  * /comments:
  *   get:
  *     summary: Retrieve all comments
- *     requestBody:
- *       required: true
- *       content:
- *         application/json:
- *           schema:
- *             type: object
- *             properties:
- *               user_id:
- *                 type: integer
  *     responses:
  *       200:
  *         description: An array of comments
@@ -87,7 +78,9 @@ comment_routes.get('/comments/:id', validateRequest.getComment, commentControlle
  *           schema:
  *             type: object
  *             properties:
- *               body:
+ *               post_id:
+ *                 type: integer
+ *               content:
  *                 type: string
  *     responses:
  *       200:

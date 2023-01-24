@@ -1,5 +1,6 @@
 const jwt = require("jsonwebtoken");
 const ACCESS_TOKEN_SECRET = process.env.ACCESS_TOKEN_SECRET;
+const bcrypt = require('bcrypt');
 
 function getUserID(req, res) {
     let token = req.headers.authorization.split(" ")[1];
@@ -12,7 +13,6 @@ function getUserID(req, res) {
 
 
 function hashPassword(password) {
-    const bcrypt = require('bcrypt');
     const saltRounds = 10;
     const salt = bcrypt.genSaltSync(saltRounds);
     const hash = bcrypt.hashSync(password, salt);
@@ -20,7 +20,6 @@ function hashPassword(password) {
 }
 
 function checkPassword(pass, person_pass) {
-    const bcrypt = require('bcrypt');
     if (!bcrypt.compareSync(pass, person_pass)) {
         return res.status(401).send({
             message: "Wrong password",
@@ -30,7 +29,6 @@ function checkPassword(pass, person_pass) {
 }
 
 function generateTokens(person_id) {
-    const jwt = require('jsonwebtoken');
     const accessToken = jwt.sign({
         id: person_id,
     }, process.env.ACCESS_TOKEN_SECRET, {
