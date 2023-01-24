@@ -131,12 +131,10 @@ const updateUser = async (req, res) => {
         {
             person_name: req.body.name,
             person_surname: req.body.surname,
-            person_mail: req.body.mail,
-            person_password: req.body.password,
         },
         {
             where: {
-                id: req.params.id,
+                person_id: getUserID(req, res)
             },
         }
     ).then((person) => {
@@ -161,7 +159,7 @@ const updateUser = async (req, res) => {
 const deleteUser = async (req, res) => {
     personModel.destroy({
         where: {
-            id: req.params.id,
+            person_id: getUserID(req, res),
         },
     }).then((person) => {
         if (!person) {

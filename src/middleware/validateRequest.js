@@ -94,6 +94,27 @@ function deleteComment(req, res, next) {
     next();
 }
 
+// User validations
+
+function updateUser(req, res, next) {
+    if (!req.body.name || !req.body.surname) {
+        return res.status(400).send({
+            message: "Name and Surname are required.",
+        });
+    }
+    next();
+}
+
+function checkUserID(req, res, next) {
+    if (!req.params.id) {
+        return res.status(400).send({
+            message: "User id is required",
+        });
+    }
+    next();
+}
+
+
 module.exports = {
     createPost,
     getPost,
@@ -105,5 +126,7 @@ module.exports = {
     getComment,
     updateComment,
     deleteComment,
+    checkUserID,
+    updateUser,
 
 };
