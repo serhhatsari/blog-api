@@ -14,9 +14,6 @@ const validateRequest = require('../middleware/validateRequest');
  *         application/json:
  *           schema:
  *             type: object
- *             properties:
- *               user_id:
- *                 type: integer
  *     responses:
  *       200:
  *         description: An array of posts
@@ -38,7 +35,7 @@ post_routes.get('/posts', postController.getPosts)
  *             properties:
  *               title:
  *                 type: string
- *               body:
+ *               content:
  *                 type: string
  *     responses:
  *       201:
@@ -89,7 +86,7 @@ post_routes.get('/posts/:id', validateRequest.getPost, postController.getPost)
  *             properties:
  *               title:
  *                 type: string
- *               body:
+ *               content:
  *                 type: string
  *     responses:
  *       200:
