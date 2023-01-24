@@ -5,7 +5,7 @@ const { getUserID } = require("../utils");
 const e = require("express");
 
 function getAllPosts(req, res) {
-    return postModel
+    postModel
         .findAll(
             {
                 attributes: {
@@ -19,12 +19,20 @@ function getAllPosts(req, res) {
                     },
                 ],
             }
-        );
+        ).then((posts) => {
+            return res.status(200).send({ posts });
+        })
+        .catch((err) => {
+            return res.status(500).send({
+                message:
+                    err.message || "Some error occurred while retrieving posts.",
+            });
+        });
 }
 
 function getPost(req, res) {
 
-    return postModel
+    postModel
         .findOne({
             attributes: {
                 exclude: ["user_id"],
@@ -50,15 +58,36 @@ function getPost(req, res) {
                 post_id: req.params.id,
             },
 
+        }).then((post) => {
+            if (!post) {
+                return res.status(404).send({
+                    message: "Post not found with id " + req.params.id,
+                });
+            }
+            return res.status(200).send(post);
+        })
+        .catch((err) => {
+            return res.status(500).send({
+                message:
+                    err.message || "Some error occurred while retrieving posts.",
+            });
         });
 }
 
 function createPost(req, res) {
-    return postModel
+    postModel
         .create({
             title: req.body.title,
             content: req.body.content,
             user_id: getUserID(req, res)
+        }).then((data) => {
+            return res.status(201).send(data);
+        })
+        .catch((err) => {
+            return res.status(500).send({
+                message:
+                    err.message || "Some error occurred while creating the post.",
+            });
         });
 }
 
@@ -96,17 +125,31 @@ function updatePost(req, res) {
 }
 
 function deletePost(req, res) {
-    return postModel
+    postModel
         .destroy({
             where: {
                 post_id: req.params.id,
                 user_id: getUserID(req, res)
             }
+        }).then((post) => {
+            if (!post) {
+                return res.status(404).send({
+                    message: "Post not found with id " + req.params.id.toString()
+                });
+            }
+            return res.status(200).send({
+                message: "Post deleted successfully!"
+            });
+        })
+        .catch((err) => {
+            return res.status(500).send({
+                message: err.message || "Some error occurred while retrieving posts."
+            });
         });
 }
 
 function getPostComments(req, res) {
-    return commentModel
+    commentModel
         .findAll({
             attributes: ["comment_id", "content"],
             include: [
