@@ -61,6 +61,21 @@ function createComment(req, res) {
 function getComment(req, res) {
     commentModel.findOne(
         {
+            attributes: {
+                exclude: ["user_id", "post_id"],
+            },
+            include: [
+                {
+                    model: postModel,
+                    attributes: ["post_id", "title", "content"],
+                },
+                {
+                    model: personModel,
+                    attributes: ["person_id", "person_name", "person_surname"],
+                },
+
+            ],
+
             where: {
                 comment_id: req.params.id,
             },
@@ -71,7 +86,7 @@ function getComment(req, res) {
                 message: 'Comment not found with id ' + req.params.id,
             });
         }
-        return res.send(comment);
+        return res.status(200).send({ comment });
     }).catch((err) => {
         return res.status(500).send({
             message:
@@ -120,7 +135,7 @@ function deleteComment(req, res) {
     ).then((data) => {
         if (!data) {
             return res.status(404).send({
-                message: 'Comment not found with id ' + req.params.id,
+                message: 'This comment may not be yours or comment not found with id ' + req.params.id,
             });
         }
         return res.status(200).send({
