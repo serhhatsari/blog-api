@@ -50,7 +50,7 @@ const Post = sequelize.define(
     }
 );
 
-Person.hasMany(Post, { foreignKey: "user_id" });
+Person.hasMany(Post, { foreignKey: "user_id", onDelete: "CASCADE", onUpdate: "CASCADE" });
 Post.belongsTo(Person, { required: true, foreignKey: "user_id" });
 
 module.exports = Post;

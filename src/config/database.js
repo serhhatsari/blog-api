@@ -16,7 +16,9 @@ const sequelize = new Sequelize(
 /*
 async function syncDatabase() {
     await sequelize.sync({ force: true });
+}
 syncDatabase();
+
 */
 
 

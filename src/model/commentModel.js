@@ -53,8 +53,8 @@ const Comment = sequelize.define(
     }
 );
 
-Person.hasMany(Comment, { foreignKey: "user_id" });
-Post.hasMany(Comment, { foreignKey: "post_id" });
+Person.hasMany(Comment, { foreignKey: "user_id" }, { onDelete: "CASCADE", onUpdate: "CASCADE" });
+Post.hasMany(Comment, { foreignKey: "post_id" }, { onDelete: "CASCADE", onUpdate: "CASCADE" });
 Comment.belongsTo(Person, { required: true, foreignKey: "user_id" });
 Comment.belongsTo(Post, { required: true, foreignKey: "post_id" });
 
