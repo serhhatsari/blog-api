@@ -68,6 +68,9 @@ function deletePost(req, res) {
         });
 }
 
+function getPostComments(req, res) {
+    post_service.getPostComments(req, res);
+}
 
 module.exports = {
     getPosts,
@@ -75,4 +78,5 @@ module.exports = {
     getPost,
     updatePost,
     deletePost,
+    getPostComments,
 };

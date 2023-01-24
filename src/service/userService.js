@@ -5,7 +5,15 @@ const { getUserID } = require('../utils');
 
 function getAllUsers(req, res) {
     personModel.findAll().then((data) => {
-        return res.status(200).send(data);
+        return res.status(200).send({
+            users: data.map((user) => {
+                return {
+                    id: user.person_id,
+                    name: user.person_name,
+                    surname: user.person_surname,
+                };
+            }),
+        });
     }).catch((err) => {
         return res.status(500).send({
             message: err.message || "Some error occurred while retrieving posts."
@@ -17,7 +25,7 @@ function getAllUsers(req, res) {
 const getUserById = async (req, res) => {
     personModel.findOne({
         where: {
-            id: req.params.id,
+            person_id: req.params.id,
         },
     }).then((data) => {
         if (!data) {
@@ -25,7 +33,10 @@ const getUserById = async (req, res) => {
                 message: "Post not found with id " + req.params.id,
             });
         }
-        return res.status(200).send(data);
+        return res.status(200).send({
+            name: data.person_name,
+            surname: data.person_surname,
+        });
     }
     ).catch((err) => {
         return res.status(500).send({
@@ -38,7 +49,7 @@ const getUserById = async (req, res) => {
 const getMe = async (req, res) => {
     personModel.findOne({
         where: {
-            id: getUserID(req, res),
+            person_id: getUserID(req, res),
         },
     }).then((data) => {
         if (!data) {
@@ -46,7 +57,12 @@ const getMe = async (req, res) => {
                 message: "Post not found with id " + req.params.id,
             });
         }
-        return res.status(200).send(data);
+        return res.status(200).send({
+            id: data.person_id,
+            name: data.person_name,
+            surname: data.person_surname,
+            mail: data.person_mail,
+        });
     }
     ).catch((err) => {
         return res.status(500).send({
@@ -67,6 +83,15 @@ const getUserPosts = async (req, res) => {
                 message: "Post not found with id " + req.params.id,
             })
         }
+        return res.status(200).send({
+            posts: data.map((post) => {
+                return {
+                    id: post.post_id,
+                    title: post.title,
+                    content: post.content,
+                }
+            })
+        });
     }).catch((err) => {
         return res.status(500).send({
             message: err.message || "Some error occurred while retrieving posts."
@@ -85,6 +110,15 @@ const getUserComments = async (req, res) => {
                 message: "Post not found with id " + req.params.id,
             })
         }
+        return res.status(200).send({
+            comments: data.map((comment) => {
+                return {
+                    id: comment.comment_id,
+                    content: comment.content,
+                }
+            }
+            )
+        });
     }).catch((err) => {
         return res.status(500).send({
             message: err.message || "Some error occurred while retrieving posts."

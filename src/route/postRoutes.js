@@ -121,5 +121,6 @@ post_routes.put('/posts/:id', validateRequest.updatePost, postController.updateP
  */
 post_routes.delete('/posts/:id', postController.deletePost)
 
+post_routes.get('/posts/:id/comments', postController.getPostComments)
 
 module.exports = post_routes;

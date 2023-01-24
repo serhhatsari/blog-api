@@ -3,7 +3,7 @@ const userController = require('../controller/userController');
 const { register } = require('../controller/authController');
 
 userRoutes.post('/users', register);
-userRoutes.get('/users', userController.getAllUsers());
+userRoutes.get('/users', userController.getAllUsers);
 userRoutes.get('/users/:id', userController.getUserById);
 userRoutes.get('/me', userController.getMe);
 userRoutes.get('/users/:id/posts', userController.getUserPosts);

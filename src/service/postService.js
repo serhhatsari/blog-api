@@ -1,4 +1,5 @@
 const postModel = require("../model/postModel");
+const commentModel = require("../model/commentModel");
 const { getUserID } = require("../utils");
 
 function getAllPosts(req, res) {
@@ -68,6 +69,33 @@ function deletePost(req, res) {
         });
 }
 
+function getPostComments(req, res) {
+    return commentModel
+        .findAll({
+            where: {
+                post_id: req.params.id,
+            },
+        }).then((post) => {
+            if (!post) {
+                return res.status(404).send({
+                    message: "Post not found with id " + req.params.id,
+                });
+            }
+            return res.status(200).send({
+                comments: post.map((comment) => {
+                    return {
+                        id: comment.comment_id,
+                        content: comment.content,
+                    };
+                })
+            });
+        }).catch((err) => {
+            return res.status(500).send({
+                message:
+                    err.message || "Some error occurred while retrieving posts.",
+            });
+        });
+}
 
 module.exports = {
     getAllPosts,
@@ -75,5 +103,5 @@ module.exports = {
     createPost,
     updatePost,
     deletePost,
-
+    getPostComments,
 };

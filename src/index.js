@@ -1,5 +1,5 @@
 const express = require('express');
-const routes = require('./routes/index');
+const routes = require('./route/index');
 const bodyParser = require('body-parser');
 const path = require('path');
 const app = require('./swagger');

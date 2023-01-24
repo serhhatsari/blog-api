@@ -1,30 +1,30 @@
-const userService = require('../services/userService');
+const userService = require('../service/userService');
 
-const getAllUsers = async (req, res) => {
-    userService.getAllUsers();
+function getAllUsers(req, res) {
+    userService.getAllUsers(req, res);
 }
 
-const getUserById = async (req, res) => {
+function getUserById(req, res) {
     userService.getUserById(req, res);
 }
 
-const getMe = async (req, res) => {
-    userService.getUserById(req, res);
+function getMe(req, res) {
+    userService.getMe(req, res);
 }
 
-const getUserPosts = async (req, res) => {
+function getUserPosts(req, res) {
     userService.getUserPosts(req, res);
 }
 
-const getUserComments = async (req, res) => {
+function getUserComments(req, res) {
     userService.getUserComments(req, res);
 }
 
-const updateUser = async (req, res) => {
+function updateUser(req, res) {
     userService.updateUser(req, res);
 }
 
-const deleteUser = async (req, res) => {
+function deleteUser(req, res) {
     userService.deleteUser(req, res);
 }
 
