@@ -4,8 +4,24 @@ const commentModel = require('../model/commentModel');
 const { getUserID } = require('../utils');
 
 function getAllUsers(req, res) {
-    personModel.findAll().then((data) => {
-        return res.status(200).send(data);
+    personModel.findAll(
+        {
+            attributes: {
+                exclude: ['person_mail', 'person_password'],
+            },
+            include: [
+                {
+                    model: postModel,
+                    attributes: ['post_id', 'title', 'content'],
+                },
+                {
+                    model: commentModel,
+                    attributes: ['comment_id', 'content'],
+                },
+            ],
+        }
+    ).then((users) => {
+        return res.status(200).send({ users });
     }).catch((err) => {
         return res.status(500).send({
             message: err.message || "Some error occurred while retrieving posts."
@@ -16,16 +32,32 @@ function getAllUsers(req, res) {
 
 const getUserById = async (req, res) => {
     personModel.findOne({
-        where: {
-            id: req.params.id,
+        attributes: {
+            exclude: ['person_mail', 'person_password'],
         },
-    }).then((data) => {
-        if (!data) {
+        include: [
+            {
+                model: postModel,
+                attributes: ['post_id', 'title', 'content'],
+            },
+            {
+                model: commentModel,
+                attributes: ['comment_id', 'content'],
+            },
+        ],
+
+        where: {
+            person_id: req.params.id,
+        },
+    }).then((user) => {
+        if (!user) {
             return res.status(404).send({
                 message: "Post not found with id " + req.params.id,
             });
         }
-        return res.status(200).send(data);
+        return res.status(200).send({
+            user
+        });
     }
     ).catch((err) => {
         return res.status(500).send({
@@ -37,8 +69,21 @@ const getUserById = async (req, res) => {
 
 const getMe = async (req, res) => {
     personModel.findOne({
+        attributes: {
+            exclude: ['person_mail', 'person_password'],
+        },
+        include: [
+            {
+                model: postModel,
+                attributes: ['post_id', 'title', 'content'],
+            },
+            {
+                model: commentModel,
+                attributes: ['comment_id', 'content'],
+            },
+        ],
         where: {
-            id: getUserID(req, res),
+            person_id: getUserID(req, res),
         },
     }).then((data) => {
         if (!data) {
@@ -46,7 +91,9 @@ const getMe = async (req, res) => {
                 message: "Post not found with id " + req.params.id,
             });
         }
-        return res.status(200).send(data);
+        return res.status(200).send({
+            data
+        });
     }
     ).catch((err) => {
         return res.status(500).send({
@@ -58,6 +105,15 @@ const getMe = async (req, res) => {
 
 const getUserPosts = async (req, res) => {
     postModel.findAll({
+        attributes: {
+            exclude: ['user_id'],
+        },
+        include: [
+            {
+                model: commentModel,
+                attributes: ['comment_id', 'content'],
+            },
+        ],
         where: {
             user_id: req.params.id,
         },
@@ -67,6 +123,7 @@ const getUserPosts = async (req, res) => {
                 message: "Post not found with id " + req.params.id,
             })
         }
+        return res.status(200).send({ posts: data });
     }).catch((err) => {
         return res.status(500).send({
             message: err.message || "Some error occurred while retrieving posts."
@@ -76,6 +133,15 @@ const getUserPosts = async (req, res) => {
 
 const getUserComments = async (req, res) => {
     commentModel.findAll({
+        attributes: {
+            exclude: ['user_id'],
+        },
+        include: [
+            {
+                model: postModel,
+                attributes: ['post_id', 'title', 'content'],
+            },
+        ],
         where: {
             user_id: req.params.id,
         },
@@ -85,6 +151,7 @@ const getUserComments = async (req, res) => {
                 message: "Post not found with id " + req.params.id,
             })
         }
+        return res.status(200).send({ data });
     }).catch((err) => {
         return res.status(500).send({
             message: err.message || "Some error occurred while retrieving posts."
@@ -97,12 +164,10 @@ const updateUser = async (req, res) => {
         {
             person_name: req.body.name,
             person_surname: req.body.surname,
-            person_mail: req.body.mail,
-            person_password: req.body.password,
         },
         {
             where: {
-                id: req.params.id,
+                person_id: getUserID(req, res)
             },
         }
     ).then((person) => {
@@ -126,8 +191,9 @@ const updateUser = async (req, res) => {
 
 const deleteUser = async (req, res) => {
     personModel.destroy({
+
         where: {
-            id: req.params.id,
+            person_id: getUserID(req, res),
         },
     }).then((person) => {
         if (!person) {

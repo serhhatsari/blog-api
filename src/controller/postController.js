@@ -3,7 +3,7 @@ const post_service = require("../service/postService");
 function getPosts(req, res) {
     const allPosts = post_service.getAllPosts(req, res);
     allPosts.then((posts) => {
-        return res.send(posts);
+        return res.status(200).send({ posts });
     })
         .catch((err) => {
             return res.status(500).send({
@@ -68,6 +68,9 @@ function deletePost(req, res) {
         });
 }
 
+function getPostComments(req, res) {
+    post_service.getPostComments(req, res);
+}
 
 module.exports = {
     getPosts,
@@ -75,4 +78,5 @@ module.exports = {
     getPost,
     updatePost,
     deletePost,
+    getPostComments,
 };

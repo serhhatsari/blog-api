@@ -1,20 +1,25 @@
 const commentModel = require('../model/commentModel');
+const personModel = require('../model/personModel');
+const postModel = require('../model/postModel');
 const { getUserID } = require("../utils");
 
 function getAllComments(req, res) {
-    commentModel.findAll()
+    commentModel.findAll(
+        {
+            attributes: {
+                exclude: ["user_id"],
+            },
+            include: [
+                {
+                    model: personModel,
+                    attributes: ["person_id", "person_name", "person_surname"],
+                },
+            ],
+        }
+    )
         .then((comments) => {
             return res.status(200).send({
-                message: "Comments retrieved successfully",
-                data: comments.map((comment) => {
-                    return {
-                        comment_id: comment.comment_id,
-                        content: comment.content,
-                        post_id: comment.post_id,
-
-                    }
-                }),
-                // TODO: Add pagination and author
+                comments,
             }
             );
         }
@@ -56,6 +61,21 @@ function createComment(req, res) {
 function getComment(req, res) {
     commentModel.findOne(
         {
+            attributes: {
+                exclude: ["user_id", "post_id"],
+            },
+            include: [
+                {
+                    model: postModel,
+                    attributes: ["post_id", "title", "content"],
+                },
+                {
+                    model: personModel,
+                    attributes: ["person_id", "person_name", "person_surname"],
+                },
+
+            ],
+
             where: {
                 comment_id: req.params.id,
             },
@@ -66,7 +86,7 @@ function getComment(req, res) {
                 message: 'Comment not found with id ' + req.params.id,
             });
         }
-        return res.send(comment);
+        return res.status(200).send({ comment });
     }).catch((err) => {
         return res.status(500).send({
             message:
@@ -115,7 +135,7 @@ function deleteComment(req, res) {
     ).then((data) => {
         if (!data) {
             return res.status(404).send({
-                message: 'Comment not found with id ' + req.params.id,
+                message: 'This comment may not be yours or comment not found with id ' + req.params.id,
             });
         }
         return res.status(200).send({
