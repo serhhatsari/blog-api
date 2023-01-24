@@ -21,7 +21,7 @@ const commentController = require('../controllers/commentController');
  *       200:
  *         description: An array of comments
  */
-comment_routes.get('/comments', validateRequest.getComments, commentController.getComments)
+comment_routes.get('/comments', commentController.getComments)
 
 /**
  * @swagger

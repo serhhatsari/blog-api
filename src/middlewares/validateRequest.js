@@ -1,3 +1,6 @@
+// Description: This file contains all the validation functions for the requests.
+
+// Authentication validations
 function validateRegister(req, res, next) {
     const { name, surname, mail, password } = req.body;
     if (!name || !surname || !mail || !password) {
@@ -15,20 +18,11 @@ function validateLogin(req, res, next) {
     next();
 }
 
-
-function getPosts(req, res, next) {
-    if (!req.body.user_id) {
-        return res.status(400).send({
-            message: "User id is required",
-        });
-    }
-    next();
-}
-
+// Post validations
 function createPost(req, res, next) {
-    if (!req.body.title || !req.body.content || !req.body.user_id) {
+    if (!req.body.title || !req.body.content) {
         return res.status(400).send({
-            message: "Content can not be empty!",
+            error: "You should provide a title and content and you provided: " + "title: " + req.body.title + " , body: " + req.body.content,
         });
     }
     next();
@@ -44,9 +38,9 @@ function getPost(req, res, next) {
 }
 
 function updatePost(req, res, next) {
-    if (!req.body.title || !req.body.content || !req.body.user_id) {
+    if (!req.body.title || !req.body.content) {
         return res.status(400).send({
-            message: "Content can not be empty!",
+            message: "Title or content can not be empty!",
         });
     }
     next();
@@ -61,24 +55,16 @@ function deletePost(req, res, next) {
     next();
 }
 
-
-function getComments(req, res) {
-    if (!req.body.user_id) {
-        return res.status(400).send({
-            message: "User id is required",
-        });
-    }
-}
+// Comment validations
 
 function createComment(req, res, next) {
-    if (!req.body.content || !req.body.user_id || !req.body.post_id) {
+    if (!req.body.content || !req.body.post_id) {
         return res.status(400).send({
-            message: "Content can not be empty!",
+            message: "content or post_id can not be empty!",
         });
     }
     next();
 }
-
 
 function getComment(req, res, next) {
     if (!req.params.id) {
@@ -90,10 +76,10 @@ function getComment(req, res, next) {
 }
 
 function updateComment(req, res, next) {
-    if (!req.body.content || !req.body.user_id || !req.body.post_id || !req.params.id) {
+    if (!req.body.content || !req.body.post_id || !req.params.id) {
 
         return res.status(400).send({
-            message: "Content can not be empty!",
+            message: "Content and id can not be empty!",
         });
     }
     next();
@@ -109,7 +95,6 @@ function deleteComment(req, res, next) {
 }
 
 module.exports = {
-    getPosts,
     createPost,
     getPost,
     updatePost,
@@ -118,7 +103,6 @@ module.exports = {
     validateLogin,
     createComment,
     getComment,
-    getComments,
     updateComment,
     deleteComment,
 

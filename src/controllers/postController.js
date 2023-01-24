@@ -16,7 +16,7 @@ function getPosts(req, res) {
 function createPost(req, res) {
     const newPost = post_service.createPost(req, res);
     newPost.then((data) => {
-        return res.send(data);
+        return res.status(201).send(data);
     })
         .catch((err) => {
             return res.status(500).send({
@@ -45,23 +45,7 @@ function getPost(req, res) {
 }
 
 function updatePost(req, res) {
-    const updatedPost = post_service.updatePost(req, res);
-    updatedPost.then((post) => {
-        if (!post) {
-            return res.status(404).send({
-                message: "Post not found with id " + req.params.id,
-            });
-        }
-        return res.status(200).send(
-            req.body
-        );
-    })
-        .catch((err) => {
-            return res.status(500).send({
-                message:
-                    err.message || "Some error occurred while retrieving posts.",
-            });
-        });
+    post_service.updatePost(req, res);
 }
 
 function deletePost(req, res) {

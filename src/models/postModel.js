@@ -24,7 +24,7 @@ const Post = sequelize.define(
             allowNull: false,
             validate: {
                 notNull: {
-                    msg: "Surname is required",
+                    msg: "Content is required",
                 },
             },
         },
@@ -39,6 +39,7 @@ const Post = sequelize.define(
             references: {
                 model: "person",
                 key: "person_id",
+                
             },
         }
     },
