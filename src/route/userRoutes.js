@@ -18,7 +18,9 @@ const validateRequest = require('../middleware/validateRequest');
  *             properties:
  *               name:
  *                 type: string
- *               email:
+ *               surname:
+ *                 type: string
+ *               mail:
  *                 type: string
  *               password:
  *                 type: string
@@ -113,6 +115,12 @@ userRoutes.get('/users/:id/comments', validateRequest.checkUserID, userControlle
  * /users:
  *   put:
  *     summary: Update a user's information
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: integer
  *     requestBody:
  *       required: true
  *       content:
