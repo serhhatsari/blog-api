@@ -125,11 +125,7 @@ function getPostComments(req, res) {
                 });
             }
             return res.status(200).send({
-                comments: post.map((comment) => {
-                    return {
-                        comment
-                    };
-                })
+                comments: post,
             });
         }).catch((err) => {
             return res.status(500).send({

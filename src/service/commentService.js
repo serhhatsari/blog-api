@@ -1,20 +1,25 @@
 const commentModel = require('../model/commentModel');
+const personModel = require('../model/personModel');
+const postModel = require('../model/postModel');
 const { getUserID } = require("../utils");
 
 function getAllComments(req, res) {
-    commentModel.findAll()
+    commentModel.findAll(
+        {
+            attributes: {
+                exclude: ["user_id"],
+            },
+            include: [
+                {
+                    model: personModel,
+                    attributes: ["person_id", "person_name", "person_surname"],
+                },
+            ],
+        }
+    )
         .then((comments) => {
             return res.status(200).send({
-                message: "Comments retrieved successfully",
-                data: comments.map((comment) => {
-                    return {
-                        comment_id: comment.comment_id,
-                        content: comment.content,
-                        post_id: comment.post_id,
-
-                    }
-                }),
-                // TODO: Add pagination and author
+                comments,
             }
             );
         }
