@@ -1,38 +1,31 @@
 const userService = require('../services/userService');
 
 const getAllUsers = async (req, res) => {
-    const users = await userService.getAllUsers();
-    res.json(users);
+    userService.getAllUsers();
 }
 
 const getUserById = async (req, res) => {
-    const user = await userService.getUserById(req.params.id);
-    res.json(user);
+    userService.getUserById(req, res);
 }
 
 const getMe = async (req, res) => {
-    const user = await userService.getUserById(req.userId);
-    res.json(user);
+    userService.getUserById(req, res);
 }
 
 const getUserPosts = async (req, res) => {
-    const posts = await userService.getUserPosts(req.params.id);
-    res.json(posts);
+    userService.getUserPosts(req.params.id);
 }
 
 const getUserComments = async (req, res) => {
-    const comments = await userService.getUserComments(req.params.id);
-    res.json(comments);
+    userService.getUserComments(req.params.id);
 }
 
 const updateUser = async (req, res) => {
-    const user = await userService.updateUser(req.params.id, req.body);
-    res.json(user);
+    userService.updateUser(req.params.id, req.body);
 }
 
 const deleteUser = async (req, res) => {
-    const user = await userService.deleteUser(req.params.id);
-    res.json(user);
+    userService.deleteUser(req.params.id);
 }
 
 
