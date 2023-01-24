@@ -2,7 +2,6 @@ const postModel = require("../model/postModel");
 const commentModel = require("../model/commentModel");
 const personModel = require("../model/personModel");
 const { getUserID } = require("../utils");
-const e = require("express");
 
 function getAllPosts(req, res) {
     postModel
@@ -31,7 +30,6 @@ function getAllPosts(req, res) {
 }
 
 function getPost(req, res) {
-
     postModel
         .findOne({
             attributes: {
