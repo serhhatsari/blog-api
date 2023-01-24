@@ -1,19 +1,55 @@
 const postModel = require("../model/postModel");
 const commentModel = require("../model/commentModel");
+const personModel = require("../model/personModel");
 const { getUserID } = require("../utils");
+const e = require("express");
 
 function getAllPosts(req, res) {
     return postModel
-        .findAll();
+        .findAll(
+            {
+                attributes: {
+                    exclude: ["user_id"],
+                },
+
+                include: [
+                    {
+                        model: personModel,
+                        attributes: ["person_id", "person_name", "person_surname"],
+                    },
+                ],
+            }
+        );
 }
 
 function getPost(req, res) {
 
     return postModel
         .findOne({
+            attributes: {
+                exclude: ["user_id"],
+            },
+            include: [
+                {
+                    model: personModel,
+                    as: "author",
+                    attributes: ["person_id", "person_name", "person_surname"],
+                },
+                {
+                    model: commentModel,
+                    attributes: ["content"],
+                    include: [
+                        {
+                            model: personModel,
+                            attributes: ["person_id", "person_name", "person_surname"],
+                        },
+                    ],
+                },
+            ],
             where: {
                 post_id: req.params.id,
             },
+
         });
 }
 
@@ -72,6 +108,13 @@ function deletePost(req, res) {
 function getPostComments(req, res) {
     return commentModel
         .findAll({
+            attributes: ["comment_id", "content"],
+            include: [
+                {
+                    model: personModel,
+                    attributes: ["person_id", "person_name", "person_surname"],
+                },
+            ],
             where: {
                 post_id: req.params.id,
             },
@@ -84,8 +127,7 @@ function getPostComments(req, res) {
             return res.status(200).send({
                 comments: post.map((comment) => {
                     return {
-                        id: comment.comment_id,
-                        content: comment.content,
+                        comment
                     };
                 })
             });

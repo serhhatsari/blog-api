@@ -1,6 +1,7 @@
 const { DataTypes } = require("sequelize");
 const sequelize = require("../config/database");
-
+const Person = require("./personModel");
+const Post = require("./postModel");
 
 const Comment = sequelize.define(
     "comment",
@@ -51,5 +52,10 @@ const Comment = sequelize.define(
         tableName: "comment",
     }
 );
+
+Person.hasMany(Comment, { foreignKey: "user_id" });
+Post.hasMany(Comment, { foreignKey: "post_id" });
+Comment.belongsTo(Person, { required: true, foreignKey: "user_id" });
+Comment.belongsTo(Post, { required: true, foreignKey: "post_id" });
 
 module.exports = Comment;

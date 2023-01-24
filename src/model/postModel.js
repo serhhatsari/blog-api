@@ -1,3 +1,4 @@
+const Person = require("./personModel");
 const { DataTypes } = require("sequelize");
 const sequelize = require("../config/database");
 
@@ -39,7 +40,7 @@ const Post = sequelize.define(
             references: {
                 model: "person",
                 key: "person_id",
-                
+
             },
         }
     },
@@ -48,5 +49,8 @@ const Post = sequelize.define(
         tableName: "post",
     }
 );
+
+Person.hasMany(Post, { foreignKey: "user_id" });
+Post.belongsTo(Person, { required: true, foreignKey: "user_id" });
 
 module.exports = Post;
