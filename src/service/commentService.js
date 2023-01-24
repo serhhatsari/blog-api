@@ -1,33 +1,48 @@
 const commentModel = require('../models/commentModel');
+const { getUserID } = require("../utils");
 
-function getComments() {
-    commentModel.findAll(
-        {
-            where: {
-                user_id: req.body.user_id,
-            },
-        },
-    ).then((comments) => {
-        return res.send(comments);
-    }
-    ).catch((err) => {
-        return res.status(500).send({
-            message:
-                err.message || 'Some error occurred while retrieving comments.',
+function getAllComments(req, res) {
+    commentModel.findAll()
+        .then((comments) => {
+            return res.status(200).send({
+                message: "Comments retrieved successfully",
+                data: comments.map((comment) => {
+                    return {
+                        comment_id: comment.comment_id,
+                        content: comment.content,
+                        post_id: comment.post_id,
+
+                    }
+                }),
+                // TODO: Add pagination and author
+            }
+            );
+        }
+        ).catch((err) => {
+            return res.status(500).send({
+                message:
+                    err.message || 'Some error occurred while retrieving comments.',
+            });
         });
-    });
 
 }
 
-function createComment() {
+function createComment(req, res) {
     commentModel.create(
         {
             content: req.body.content,
-            user_id: req.body.user_id,
             post_id: req.body.post_id,
+            user_id: getUserID(req, res),
         },
     ).then((data) => {
-        return res.send(data);
+        return res.status(201).send({
+            message: "Comment created successfully",
+            data: {
+                comment_id: data.comment_id,
+                content: data.content,
+                post_id: data.post_id,
+            },
+        });
     }
     ).catch((err) => {
         return res.status(500).send({
@@ -38,7 +53,7 @@ function createComment() {
     );
 }
 
-function getComment() {
+function getComment(req, res) {
     commentModel.findOne(
         {
             where: {
@@ -60,11 +75,11 @@ function getComment() {
     });
 }
 
-function updateComment() {
+function updateComment(req, res) {
     commentModel.update(
         {
             content: req.body.content,
-            user_id: req.body.user_id,
+            user_id: getUserID(req, res),
             post_id: req.body.post_id,
         },
         {
@@ -78,7 +93,9 @@ function updateComment() {
                 message: 'Comment not found with id ' + req.params.id,
             });
         }
-        return res.send(data);
+        return res.status(200).send({
+            message: "Comment updated successfully",
+        });
     }).catch((err) => {
         return res.status(500).send({
             message:
@@ -87,11 +104,12 @@ function updateComment() {
     });
 }
 
-function deleteComment() {
+function deleteComment(req, res) {
     commentModel.destroy(
         {
             where: {
                 comment_id: req.params.id,
+                user_id: getUserID(req, res),
             },
         }
     ).then((data) => {
@@ -100,7 +118,9 @@ function deleteComment() {
                 message: 'Comment not found with id ' + req.params.id,
             });
         }
-        return res.send(data);
+        return res.status(200).send({
+            message: "Comment deleted successfully",
+        });
     }).catch((err) => {
         return res.status(500).send({
             message:
@@ -109,10 +129,8 @@ function deleteComment() {
     });
 }
 
-
-
 module.exports = {
-    getComments,
+    getAllComments,
     createComment,
     getComment,
     updateComment,

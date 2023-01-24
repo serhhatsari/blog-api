@@ -5,7 +5,7 @@ const validateRequest = require('../middlewares/validateRequest');
 /**
  * @swagger
  *
- * /auth/register:
+ * /register:
  *   post:
  *     summary: Register a new user
  *     requestBody:
@@ -15,22 +15,30 @@ const validateRequest = require('../middlewares/validateRequest');
  *           schema:
  *             type: object
  *             properties:
+ *               name:
+ *                type: string
+ *                example: Serhat
+ *               surname:
+ *                type: string
+ *                example: SARI
  *               mail:
  *                 type: string
+ *                 example: serhat@gmail.com
  *               password:
  *                 type: string
+ *                 example: serhat123
  *     responses:
  *       201:
  *         description: User created successfully
  *       400:
  *         description: Invalid request
  */
-auth_routes.post('/auth/register', validateRequest.validateRegister, authController.register)
+auth_routes.post('/register', validateRequest.validateRegister, authController.register)
 
 /**
  * @swagger
  *
- * /auth/login:
+ * /login:
  *   post:
  *     summary: Login a user
  *     requestBody:
@@ -42,15 +50,17 @@ auth_routes.post('/auth/register', validateRequest.validateRegister, authControl
  *             properties:
  *               mail:
  *                 type: string
+ *                 example: serhat@gmail.com
  *               password:
  *                 type: string
+ *                 example: serhat123
  *     responses:
  *       200:
  *         description: Login successful
  *       400:
  *         description: Invalid request
  */
-auth_routes.post('/auth/login', validateRequest.validateLogin, authController.login)
+auth_routes.post('/login', validateRequest.validateLogin, authController.login)
 
 
 module.exports = auth_routes;

@@ -21,7 +21,7 @@ const validateRequest = require('../middlewares/validateRequest');
  *       200:
  *         description: An array of posts
  */
-post_routes.get('/posts', validateRequest.getPosts, postController.getPosts)
+post_routes.get('/posts', postController.getPosts)
 
 /**
  * @swagger

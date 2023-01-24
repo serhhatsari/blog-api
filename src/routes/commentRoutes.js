@@ -21,7 +21,7 @@ const commentController = require('../controllers/commentController');
  *       200:
  *         description: An array of comments
  */
-comment_routes.get('/comments', validateRequest.getComments, commentController.getComments)
+comment_routes.get('/comments', commentController.getComments)
 
 /**
  * @swagger
@@ -36,9 +36,11 @@ comment_routes.get('/comments', validateRequest.getComments, commentController.g
  *           schema:
  *             type: object
  *             properties:
- *               postId:
+ *               post_id:
  *                 type: integer
- *               body:
+ *               user_id:
+ *                 type: integer
+ *               content:
  *                 type: string
  *     responses:
  *       201:

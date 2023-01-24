@@ -7,14 +7,21 @@ function register(req, res) {
         .then((person) => {
             console.log(person);
             return res.status(200).send({
-                name: req.body.name,
-                surname: req.body.surname,
+                status: "success",
+                message: "Person created",
+                data: {
+                    name: req.body.name,
+                    surname: req.body.surname,
+                    mail: req.body.mail,
+                    accessToken: generateTokens(person.person_id).accessToken,
+                    refreshToken: generateTokens(person.person_id).refreshToken,
+                }
             });
         })
         .catch((err) => {
-            console.log(err);
-            return res.status(500).send({
-                error: err["errors"][0]["message"],
+            return res.status(400).send({
+                status: "error",
+                message: err["errors"][0]["message"],
             });
         });
 }
@@ -37,8 +44,6 @@ function hashPassword(password) {
     return hash;
 }
 
-
-
 function login(req, res) {
     personModel.findOne({
         where: {
@@ -57,16 +62,20 @@ function login(req, res) {
             const tokens = generateTokens(person.person_id);
 
             return res.status(200).send({
-                accessToken: tokens.accessToken,
-                refreshToken: tokens.refreshToken,
-                name: person.person_name,
-                surname: person.person_surname,
-
+                status: "success",
+                message: "Person logged in",
+                data: {
+                    accessToken: tokens.accessToken,
+                    refreshToken: tokens.refreshToken,
+                    name: person.person_name,
+                    surname: person.person_surname,
+                    mail: person.person_mail,
+                },
             });
         })
         .catch((err) => {
             console.log(err);
-            return res.status(500).send({
+            return res.status(400).send({
                 message: "Error while finding person",
             });
         });
@@ -81,7 +90,6 @@ function checkPassword(pass, person_pass) {
     }
 
 }
-
 
 function generateTokens(person_id) {
     const jwt = require('jsonwebtoken');
