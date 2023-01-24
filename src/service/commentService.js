@@ -1,4 +1,4 @@
-const commentModel = require('../models/commentModel');
+const commentModel = require('../model/commentModel');
 const { getUserID } = require("../utils");
 
 function getAllComments(req, res) {

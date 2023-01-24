@@ -1,13 +1,13 @@
-const comment_routes = require('express').Router();
-const validateRequest = require('../middlewares/validateRequest');
-const commentController = require('../controllers/commentController');
+const post_routes = require('express').Router();
+const postController = require('../controller/postController');
+const validateRequest = require('../middleware/validateRequest');
 
 /**
  * @swagger
  *
- * /comments:
+ * /posts:
  *   get:
- *     summary: Retrieve all comments
+ *     summary: Retrieve all posts
  *     requestBody:
  *       required: true
  *       content:
@@ -19,16 +19,16 @@ const commentController = require('../controllers/commentController');
  *                 type: integer
  *     responses:
  *       200:
- *         description: An array of comments
+ *         description: An array of posts
  */
-comment_routes.get('/comments', commentController.getComments)
+post_routes.get('/posts', postController.getPosts)
 
 /**
  * @swagger
  *
- * /comments:
+ * /posts:
  *   post:
- *     summary: Create a new comment
+ *     summary: Create a new post
  *     requestBody:
  *       required: true
  *       content:
@@ -36,26 +36,24 @@ comment_routes.get('/comments', commentController.getComments)
  *           schema:
  *             type: object
  *             properties:
- *               post_id:
- *                 type: integer
- *               user_id:
- *                 type: integer
- *               content:
+ *               title:
+ *                 type: string
+ *               body:
  *                 type: string
  *     responses:
  *       201:
- *         description: Comment created successfully
+ *         description: Post created successfully
  *       400:
  *         description: Invalid request
  */
-comment_routes.post('/comments', validateRequest.createComment, commentController.createComment)
+post_routes.post('/posts', validateRequest.createPost, postController.createPost)
 
 /**
  * @swagger
  *
- * /comments/{id}:
+ * /posts/{id}:
  *   get:
- *     summary: Retrieve a comment by ID
+ *     summary: Retrieve a post by ID
  *     parameters:
  *       - in: path
  *         name: id
@@ -64,18 +62,18 @@ comment_routes.post('/comments', validateRequest.createComment, commentControlle
  *           type: integer
  *     responses:
  *       200:
- *         description: A comment object
+ *         description: A post object
  *       404:
- *         description: Comment not found
+ *         description: Post not found
  */
-comment_routes.get('/comments/:id', validateRequest.getComment, commentController.getComment)
+post_routes.get('/posts/:id', validateRequest.getPost, postController.getPost)
 
 /**
  * @swagger
  *
- * /comments/{id}:
+ * /posts/{id}:
  *   put:
- *     summary: Update a comment by ID
+ *     summary: Update a post by ID
  *     parameters:
  *       - in: path
  *         name: id
@@ -89,24 +87,26 @@ comment_routes.get('/comments/:id', validateRequest.getComment, commentControlle
  *           schema:
  *             type: object
  *             properties:
+ *               title:
+ *                 type: string
  *               body:
  *                 type: string
  *     responses:
  *       200:
- *         description: Comment updated successfully
+ *         description: Post updated successfully
  *       400:
  *         description: Invalid request
  *       404:
- *         description: Comment not found
+ *         description: Post not found
  */
-comment_routes.put('/comments/:id', validateRequest.updateComment, commentController.updateComment)
+post_routes.put('/posts/:id', validateRequest.updatePost, postController.updatePost)
 
 /**
  * @swagger
  *
- * /comments/{id}:
+ * /posts/{id}:
  *   delete:
- *     summary: Delete a comment by ID
+ *     summary: Delete a post by ID
  *     parameters:
  *       - in: path
  *         name: id
@@ -115,10 +115,11 @@ comment_routes.put('/comments/:id', validateRequest.updateComment, commentContro
  *           type: integer
  *     responses:
  *       204:
- *         description: Comment deleted successfully
+ *         description: Post deleted successfully
  *       404:
- *         description: Comment not found
+ *         description: Post not found
  */
-comment_routes.delete('/comments/:id', validateRequest.deleteComment, commentController.deleteComment)
+post_routes.delete('/posts/:id', postController.deletePost)
 
-module.exports = comment_routes;
+
+module.exports = post_routes;

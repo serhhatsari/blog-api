@@ -1,4 +1,4 @@
-const personModel = require("../models/personModel");
+const personModel = require("../model/personModel");
 const { hashPassword, checkPassword, generateTokens } = require("../utils/index");
 
 function register(req, res) {

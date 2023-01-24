@@ -1,4 +1,4 @@
-const postModel = require("../models/postModel");
+const postModel = require("../model/postModel");
 const { getUserID } = require("../utils");
 
 function getAllPosts(req, res) {
