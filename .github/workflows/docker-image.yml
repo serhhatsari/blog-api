@@ -13,7 +13,8 @@ jobs:
       with:
         username: ${{ secrets.DOCKERHUB_USERNAME }}
         password: ${{ secrets.DOCKERHUB_TOKEN }}
-        
+    - name: print ls
+      run: ls
     - name: Build and Tag Docker Image
       run: docker build -t blog-app . && docker tag blog-app serhhatsari/blog-app:latest
       
