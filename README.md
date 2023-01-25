@@ -1,3 +1,15 @@
+## Description
+
+Blog API implemented using Express.js and MySQL. Sequelize is used for ORM.
+
+## Installation
+
+You can install the project using the following command:
+
+```
+git clone https://github.com/serhhatsari/blog-app
+```
+
 ## Running with Docker Compose
 
 You can start the server using the following command:
