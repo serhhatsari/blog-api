@@ -1,8 +1,9 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: Blog App
+  name: blog-app
 spec:
+  replicas: 1
   selector:
     matchLabels:
       app: blog-app
@@ -14,6 +15,13 @@ spec:
       containers:
       - name: blog-app
         image: serhhatsari/blog-app
+        env:
+        - name: NODE_ENV
+          value: development
+        - name: DB_HOST
+          value:  mysql
+        - name: DB_ENV
+          value: docker-compose
         resources:
           limits:
             memory: "128Mi"
@@ -21,46 +29,11 @@ spec:
         ports:
         - containerPort: 3000
 ---
-apiVersion: apps/v1
-kind: Deployment
-metadata:
-  name: mysql
-spec:
-  selector:
-    matchLabels:
-      app: mysql
-  template:
-    metadata:
-      labels:
-        app: mysql
-    spec:
-      containers:
-      - name: mysql
-        image: mysql:5.7
-        resources:
-          limits:
-            memory: "128Mi"
-            cpu: "500m"
-        ports:
-        - containerPort: 3306
 
----
 apiVersion: v1
 kind: Service
 metadata:
-  name: mysql
-spec:
-  selector:
-    app: mysql
-  ports:
-  - port: 3306
-    targetPort: 3306
-
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: Blog Service
+  name: blog-service
 spec:
   type: NodePort
   selector:
@@ -69,4 +42,88 @@ spec:
   - protocol: TCP
     port: 3000
     targetPort: 3000
+    nodePort: 32100
 
+---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mysql
+spec:
+  selector:
+    matchLabels:
+      app: mysql
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: mysql
+    spec:
+      containers:
+      - name: mysql
+        image: mysql:5.7
+        env:
+          - name: MYSQL_ROOT_PASSWORD
+            value: root
+          - name: MYSQL_DATABASE 
+            value: here
+          - name: MYSQL_USER
+            value: dev
+          - name: MYSQL_PASSWORD
+            value: dev
+        resources:
+          limits:
+            memory: "4000Mi"
+            cpu: "500m"
+        ports:
+          - containerPort: 3306
+        volumeMounts:
+          - name: mysql-persistent-storage
+            mountPath: /var/lib/mysql
+      volumes:
+      - name: mysql-persistent-storage
+        persistentVolumeClaim:
+          claimName: mysql-pv-claim
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: mysql
+spec:
+  type: NodePort
+  selector:
+    app: mysql
+  ports:
+  - port: 3306
+    targetPort: 3306
+    nodePort: 32002
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: mysql-pv-volume
+  labels:
+    type: local
+spec:
+  storageClassName: manual
+  capacity:
+    storage: 2Gi
+  accessModes:
+    - ReadWriteOnce
+  hostPath:
+    path: "/mysql-volume"
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: mysql-pv-claim
+spec:
+  storageClassName: manual
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 2Gi
