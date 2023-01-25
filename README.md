@@ -46,7 +46,7 @@ You can deploy the server to the k8s using the following command:
 kubectl apply -f deployment.yml
 ```
 
-If you are using minikube, then run the following generate a URL to access the server:
+If you are using minikube, then run the following command to generate a URL to access the server:
 
 ```
 minikube service blog-service --url
