@@ -18,7 +18,15 @@ You can delete the containers using the following command:
 docker compose down
 ```
 
-## Deploying to Kubernetes
+#### Swagger Page
+
+Any endpoint that is exposed by the server can be accessible at the /docs endpoint.
+
+```
+eg: localhost:3000/api/docs
+```
+
+## Running with Kubernetes
 
 You can deploy the server to the k8s using the following command:
 
