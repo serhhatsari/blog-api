@@ -13,6 +13,9 @@ jobs:
       with:
         username: ${{ secrets.DOCKERHUB_USERNAME }}
         password: ${{ secrets.DOCKERHUB_TOKEN }}
+    - name: Checkout
+      uses: actions/checkout@v3.3.0
+      
     - name: print ls
       run: ls
     - name: Build and Tag Docker Image
