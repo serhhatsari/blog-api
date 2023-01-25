@@ -14,7 +14,7 @@ const sequelize = new Sequelize(
 );
 
 
-if (process.env.DB_ENV === "docker-compose") {
+if (process.env.DB_ENV === "dev") {
     async function syncDatabase() {
         await sequelize.sync({ force: true });
     }

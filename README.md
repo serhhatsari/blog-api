@@ -89,5 +89,5 @@ docker container rm mysql -f
 Then, you can start the server using the following command:
 
 ```
-NODE_ENV=development npm start
+NODE_ENV=development DB_ENV=dev npm start
 ```

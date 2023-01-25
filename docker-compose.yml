@@ -10,7 +10,7 @@ services:
     environment:
       NODE_ENV: development
       DB_HOST: mysql-db
-      DB_ENV: docker-compose
+      DB_ENV: dev
 
   db:
     image: mysql:5.7
