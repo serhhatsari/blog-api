@@ -14,15 +14,8 @@ jobs:
         username: ${{ secrets.DOCKERHUB_USERNAME }}
         password: ${{ secrets.DOCKERHUB_TOKEN }}
         
-    - name: Extract metadata (tags, labels) for Docker
-      id: meta
-      uses: docker/metadata-action@98669ae865ea3cffbcbaa878cf57c20bbf1c6c38
-      with:
-        images: ${{ secrets.DOCKERHUB_USERNAME }}/blog-app
-    
-    - name: Build and push Docker image
-      uses: docker/build-push-action@ad44023a93711e3deb337508980b4b5e9bcdc5dc
-      with:
-        context: ../../Dockerfile
-        push: true
-        tags: ${{ steps.meta.outputs.tags }}
+    - name: Build and Tag Docker Image
+      run: docker build -t blog-app . && docker tag blog-app serhhatsari/blog-app:latest
+      
+    - name: Push Docker Image
+      run: docker push serhhatsari/blog-app:latest
