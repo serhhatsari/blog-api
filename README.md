@@ -34,13 +34,13 @@ You can deploy the server to the k8s using the following command:
 kubectl apply -f deployment.yml
 ```
 
-If you are using minikube, then run the following command to access the server:
+If you are using minikube, then run the following generate a URL to access the server:
 
 ```
 minikube service blog-service --url
 ```
 
-Server is now accessible at the url given by minikube.
+Server is now accessible at the URL given by minikube.
 
 You can delete the server from k8s using the following command:
 
