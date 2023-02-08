@@ -12,7 +12,7 @@ git clone https://github.com/serhhatsari/blog-app
 
 ## Running with Docker Compose
 
-You can start the server using the following command:
+You can start the server using docker compose with the following command:
 
 ```
 docker compose up --build -d
